@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'lua4swift'
   s.version          = '1.0.0'
-  s.summary          = 'High-level (convenient) Lua bindings for Swift'
+  s.summary          = 'High-level (convenient) Lua bindings for Swift, evil conversion for lua 5.2.1'
 
   s.description      = <<-DESC
   High-level (convenient) Lua bindings for Swift
@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/sdegutis/lua4swift'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Steven Degutis' => 'sdegutis@users.noreply.github.com' }
-  s.source           = { :git => 'https://github.com/sdegutis/lua4swift.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/wlghdu97/lua4swift.git', :tag => s.version.to_s }
   s.swift_version    = '4.0'
   s.module_name = 'Lua'
 
