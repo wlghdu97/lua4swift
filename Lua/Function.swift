@@ -71,7 +71,7 @@ open class Arguments {
     open var lightUserdata: LightUserdata { return values.remove(at: 0) as! LightUserdata }
     open var thread: Thread { return values.remove(at: 0) as! Thread }
     
-    open var integer: Int64 { return (values.remove(at: 0) as! Number).toInteger() }
+    open var integer: Int { return (values.remove(at: 0) as! Number).toInteger() }
     open var double: Double { return (values.remove(at: 0) as! Number).toDouble() }
     
     open func customType<T: CustomTypeInstance>() -> T { return (values.remove(at: 0) as! Userdata).toCustomType() }

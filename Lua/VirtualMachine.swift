@@ -259,7 +259,8 @@ open class VirtualMachine {
     }
     
     fileprivate func argError(_ expectedType: String, at argPosition: Int) {
-        luaL_typerror(vm, Int32(argPosition), (expectedType as NSString).utf8String)
+        //luaL_typerror(vm, Int32(argPosition), (expectedType as NSString).utf8String)
+        luaL_argerror(vm, Int32(argPosition), lua_pushstring(vm, ("\(expectedType) expected, got \(String(describing: lua_typename(vm, Int32(argPosition))))" as NSString).utf8String))
     }
     
     open func createCustomType<T>(_ setup: (CustomType<T>) -> Void) -> CustomType<T> {
@@ -306,7 +307,7 @@ open class VirtualMachine {
     internal func ref(_ position: Int) -> Int { return Int(luaL_ref(vm, Int32(position))) }
     internal func unref(_ table: Int, _ position: Int) { luaL_unref(vm, Int32(table), Int32(position)) }
     internal func absolutePosition(_ position: Int) -> Int { return Int(lua_absindex(vm, Int32(position))) }
-    internal func rawGet(tablePosition: Int, index: Int) { lua_rawgeti(vm, Int32(tablePosition), lua_Integer(index)) }
+    internal func rawGet(tablePosition: Int, index: Int) { lua_rawgeti(vm, Int32(tablePosition), Int32(index)) }
     
     internal func pushFromStack(_ position: Int) {
         lua_pushvalue(vm, Int32(position))

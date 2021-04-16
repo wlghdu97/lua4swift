@@ -10,7 +10,7 @@ open class Number: StoredValue, CustomDebugStringConvertible {
         return v
     }
     
-    open func toInteger() -> Int64 {
+    open func toInteger() -> Int {
         push(vm)
         let v = lua_tointegerx(vm.vm, -1, nil)
         vm.pop()
@@ -19,7 +19,7 @@ open class Number: StoredValue, CustomDebugStringConvertible {
     
     open var debugDescription: String {
         push(vm)
-        let isInteger = lua_isinteger(vm.vm, -1) != 0
+        let isInteger = lua_isnumber(vm.vm, -1) != 0
         vm.pop()
         
         if isInteger { return toInteger().description }
@@ -28,7 +28,7 @@ open class Number: StoredValue, CustomDebugStringConvertible {
     
     open var isInteger: Bool {
         push(vm)
-        let isInteger = lua_isinteger(vm.vm, -1) != 0
+        let isInteger = lua_isnumber(vm.vm, -1) != 0
         vm.pop()
         return isInteger
     }
@@ -50,7 +50,7 @@ extension Double: Value {
     
     public static func arg(_ vm: VirtualMachine, value: Value) -> String? {
         value.push(vm)
-        let isDouble = lua_isinteger(vm.vm, -1) != 0
+        let isDouble = lua_isnumber(vm.vm, -1) != 0
         vm.pop()
         if !isDouble { return "double" }
         return nil
@@ -61,14 +61,14 @@ extension Double: Value {
 extension Int64: Value {
     
     public func push(_ vm: VirtualMachine) {
-        lua_pushinteger(vm.vm, self)
+        lua_pushinteger(vm.vm, lua_Integer(Int64(self)))
     }
     
     public func kind() -> Kind { return .number }
     
     public static func arg(_ vm: VirtualMachine, value: Value) -> String? {
         value.push(vm)
-        let isDouble = lua_isinteger(vm.vm, -1) != 0
+        let isDouble = lua_isnumber(vm.vm, -1) != 0
         vm.pop()
         if !isDouble { return "integer" }
         return nil
@@ -79,7 +79,7 @@ extension Int64: Value {
 extension Int: Value {
     
     public func push(_ vm: VirtualMachine) {
-        lua_pushinteger(vm.vm, Int64(self))
+        lua_pushinteger(vm.vm, self)
     }
     
     public func kind() -> Kind { return .number }

@@ -74,14 +74,14 @@ open class Table: StoredValue {
     open func asSequence<T: Value>() -> [T] {
         var sequence = [T]()
         
-        let dict: [Int64 : T] = asDictionary({ (k: Number) in k.toInteger() }, { $0 as T })
+        let dict: [Int : T] = asDictionary({ (k: Number) in k.toInteger() }, { $0 as T })
         
         // if it has no numeric keys, then it's empty; job well done, team, job well done.
         if dict.count == 0 { return sequence }
         
         // ensure table has no holes and keys start at 1
         let sortedKeys = dict.keys.sorted(by: <)
-        if [Int64](1...sortedKeys.last!) != sortedKeys { return sequence }
+        if [Int](1...sortedKeys.last!) != sortedKeys { return sequence }
         
         // append values to the array, in order
         for i in sortedKeys {
